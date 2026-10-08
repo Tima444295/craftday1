@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CraftDay — Гриф-выживание с приватом | c15.play2go.cloud:20141</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+    font-family:'Segoe UI',Arial,Helvetica,sans-serif;
+    background:#141a2a;
+    color:#fff;
+    overflow-x:hidden;
+    line-height:1.5;
+}
+body:before{
+    content:"";
+    position:fixed;inset:0;z-index:-2;
+    background:
+      radial-gradient(circle at 15% 15%,rgba(255,160,120,.20),transparent 38%),
+      radial-gradient(circle at 85% 75%,rgba(255,120,180,.16),transparent 38%),
+      radial-gradient(circle at 50% 50%,rgba(150,120,255,.14),transparent 55%),
+      radial-gradient(circle at 80% 20%,rgba(120,200,255,.12),transparent 45%),
+      linear-gradient(135deg,#151c2e,#221a30 50%,#141a26);
+}
+body:after{
+    content:"";
+    position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+    background-size:44px 44px;
+    mask-image:radial-gradient(ellipse at center,#000 35%,transparent 85%);
+}
+header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(20,26,42,.68);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(255,160,120,.22);
+}
+.nav{
+    max-width:1200px;margin:auto;padding:16px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:20px;
+}
+.logo{
+    font-size:24px;font-weight:900;letter-spacing:2px;
+    background:linear-gradient(90deg,#ffb28a,#ff7aa8,#c89cff);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 18px rgba(255,150,120,.6));
+}
+nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+nav a{
+    color:#e0d4dc;text-decoration:none;padding:9px 14px;border-radius:9px;
+    transition:.25s;font-size:14px;font-weight:600;
+}
+nav a:hover,nav a.active{background:rgba(255,150,120,.18);color:#ffc2a0}
+.hero{
+    min-height:100vh;display:flex;align-items:center;justify-content:center;
+    text-align:center;padding:130px 20px 80px;position:relative;
+}
+.hero-content{max-width:980px}
+.badge{
+    display:inline-block;padding:10px 18px;border:1px solid rgba(255,160,120,.5);
+    border-radius:100px;background:rgba(255,160,120,.12);color:#ffc8a8;
+    font-size:13px;font-weight:700;margin-bottom:26px;letter-spacing:1px;
+    box-shadow:0 0 35px rgba(255,150,120,.25);
+}
+h1{
+    font-size:clamp(64px,12vw,150px);line-height:.9;font-weight:1000;
+    letter-spacing:6px;
+    background:linear-gradient(135deg,#ffffff 0%,#ffd0b8 35%,#ff8ab8 70%,#c89cff 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 12px 45px rgba(255,150,120,.5));
+    margin-bottom:8px;
+}
+.hero p{
+    max-width:720px;margin:26px auto;color:#d4c4ce;font-size:18px;line-height:1.7;
+}
+.buttons{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:32px}
+.btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    padding:15px 26px;border-radius:12px;text-decoration:none;font-weight:800;
+    border:1px solid rgba(255,255,255,.16);transition:.3s;cursor:pointer;
+    font-size:15px;
+}
+.btn-primary{
+    background:linear-gradient(135deg,#ffb28a,#ff7aa8);
+    color:#2a0814;box-shadow:0 12px 40px rgba(255,150,120,.45);
+}
+.btn-primary:hover{transform:translateY(-4px);box-shadow:0 18px 50px rgba(255,150,120,.65)}
+.btn-dark{background:rgba(255,255,255,.1);color:#fff;backdrop-filter:blur(12px)}
+.btn-dark:hover{transform:translateY(-4px);background:rgba(255,255,255,.18)}
+section{max-width:1200px;margin:auto;padding:110px 24px}
+.section-title{text-align:center;margin-bottom:55px}
+.section-title h2{
+    font-size:clamp(32px,4vw,46px);margin-bottom:12px;
+    background:linear-gradient(135deg,#ffffff,#ffc8a8);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.section-title p{color:#c0aeb8;font-size:16px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{
+    position:relative;
+    background:linear-gradient(145deg,rgba(56,42,58,.78),rgba(38,28,48,.78));
+    border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:30px;
+    transition:.35s;box-shadow:0 18px 55px rgba(0,0,0,.28);
+    backdrop-filter:blur(14px);
+    overflow:hidden;
+}
+.card:before{
+    content:"";position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,transparent,#ffb28a,#ff7aa8,transparent);
+    opacity:0;transition:.35s;
+}
+.card:hover{transform:translateY(-8px);border-color:rgba(255,160,120,.5)}
+.card:hover:before{opacity:1}
+.icon{
+    font-size:34px;margin-bottom:18px;
+    display:inline-block;width:60px;height:60px;line-height:60px;text-align:center;
+    background:linear-gradient(135deg,rgba(255,150,120,.25),rgba(255,90,160,.18));
+    border-radius:14px;
+    box-shadow:0 0 35px rgba(255,150,120,.25);
+}
+.card h3{font-size:20px;margin-bottom:10px;color:#fff0e6}
+.card p{color:#d0bcc6;line-height:1.6;font-size:14.5px}
+.server-box{
+    max-width:820px;margin:auto;padding:40px;border-radius:22px;
+    background:linear-gradient(145deg,rgba(56,42,58,.85),rgba(38,28,48,.85));
+    border:1px solid rgba(255,160,120,.3);text-align:center;
+    box-shadow:0 25px 70px rgba(0,0,0,.35),0 0 70px rgba(255,150,120,.15);
+    backdrop-filter:blur(14px);
+}
+.status{display:flex;justify-content:center;gap:10px;align-items:center;color:#e0ccd4;font-size:14px;font-weight:600}
+.dot{
+    width:10px;height:10px;background:#ffb28a;border-radius:50%;
+    box-shadow:0 0 18px #ffb28a;animation:pulse 1.6s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.85)}}
+.ip{
+    margin:22px 0;padding:22px;border-radius:14px;
+    background:rgba(52,18,32,.55);
+    border:1px dashed rgba(255,160,120,.55);
+    font-size:22px;font-weight:900;letter-spacing:1px;color:#ffc8a8;
+    font-family:'Courier New',monospace;
+    text-shadow:0 0 22px rgba(255,150,120,.5);
+    word-break:break-all;
+}
+.rules{display:grid;gap:12px;max-width:900px;margin:auto}
+.rule{
+    display:flex;gap:18px;padding:20px 22px;
+    background:linear-gradient(145deg,rgba(56,42,58,.65),rgba(38,28,48,.65));
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:14px;color:#d0bcc6;line-height:1.6;
+    transition:.3s;backdrop-filter:blur(10px);
+}
+.rule:hover{border-color:rgba(255,160,120,.4);transform:translateX(6px)}
+.num{
+    font-weight:900;font-size:18px;min-width:34px;
+    background:linear-gradient(135deg,#ffb28a,#ff7aa8);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.guide{max-width:900px;margin:auto}
+.step{
+    display:flex;gap:22px;margin-bottom:16px;padding:24px;
+    background:linear-gradient(145deg,rgba(56,42,58,.65),rgba(38,28,48,.65));
+    border-radius:16px;border:1px solid rgba(255,255,255,.1);
+    transition:.3s;backdrop-filter:blur(10px);
+}
+.step:hover{border-color:rgba(255,160,120,.4);transform:translateX(6px)}
+.step b{
+    min-width:38px;font-size:22px;font-weight:900;
+    background:linear-gradient(135deg,#ffb28a,#ff7aa8);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.step span{color:#d0bcc6;line-height:1.6}
+.discord{
+    text-align:center;padding:65px 30px;border-radius:24px;
+    background:linear-gradient(135deg,rgba(120,120,255,.22),rgba(255,150,120,.16));
+    border:1px solid rgba(200,160,255,.35);
+    box-shadow:0 25px 70px rgba(0,0,0,.3);
+    backdrop-filter:blur(14px);
+}
+.discord h2{
+    font-size:32px;margin-bottom:14px;
+    background:linear-gradient(135deg,#fff,#ffc8a8);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+footer{
+    border-top:1px solid rgba(255,255,255,.1);padding:34px 20px;
+    text-align:center;color:#9c8a96;font-size:13px;
+}
+.reveal{opacity:0;transform:translateY(30px);transition:.8s cubic-bezier(.2,.8,.2,1)}
+.reveal.show{opacity:1;transform:none}
+@media(max-width:800px){
+    .grid{grid-template-columns:1fr}
+    nav{display:none}
+    .nav{justify-content:center}
+    section{padding:80px 18px}
+    .hero{padding-top:120px}
+    .server-box{padding:26px 18px}
+    .ip{font-size:16px}
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="nav">
+    <div class="logo">CRAFTDAY</div>
+    <nav>
+        <a href="#home" class="active">Главная</a>
+        <a href="#about">О сервере</a>
+        <a href="#online">IP</a>
+        <a href="#rules">Правила</a>
+        <a href="#guide">Гайд</a>
+        <a href="#discord">Discord</a>
+    </nav>
+</div>
+</header>
+
+<main>
+<section class="hero" id="home">
+    <div class="hero-content reveal">
+        <div class="badge">🛡 ГРИФ-ВЫЖИВАНИЕ • ПРИВАТ • PVP ЗОНЫ</div>
+        <h1>CRAFTDAY</h1>
+        <p>Гриф-выживание с приватом и балансом. Строй базу под защитой региона, выходи за его пределы — и вступай в настоящую борьбу. Твоя территория защищена, но за её границей правит хаос.</p>
+        <div class="buttons">
+            <a href="#online" class="btn btn-primary">⚔ Начать выживать</a>
+            <a href="https://discord.gg/WyUz8Efhw" target="_blank" class="btn btn-dark">💬 Discord</a>
+        </div>
+    </div>
+</section>
+
+<section id="about">
+    <div class="section-title reveal">
+        <h2>О сервере</h2>
+        <p>CraftDay — гриф-выживание с приватом и разумными правилами.</p>
+    </div>
+    <div class="grid">
+        <div class="card reveal"><div class="icon">🛡</div><h3>Приват-регионы</h3><p>Запри свою базу командой <b style="color:#ffc8a8">/rg claim</b> — и она под защитой. Никто не сможет ломать, взрывать или воровать внутри региона.</p></div>
+        <div class="card reveal"><div class="icon">💥</div><h3>Гриф вне привата</h3><p>За пределами защищённых зон действует анархия: гриф, рейды, ловушки и PvP разрешены. Строишь вне привата — рискуешь.</p></div>
+        <div class="card reveal"><div class="icon">🗡</div><h3>PvP и рейды</h3><p>Собирай банду, находи чужие незащищённые базы, устраивай засады. Регион — не спасение, если ты забыл его расширить.</p></div>
+    </div>
+</section>
+
+<section id="online">
+    <div class="section-title reveal">
+        <h2>Зайти на сервер</h2>
+        <p>Скопируй IP и начинай выживать.</p>
+    </div>
+    <div class="server-box reveal">
+        <div class="status"><span class="dot"></span> CRAFTDAY • гриф-выживание с приватом • онлайн</div>
+        <div class="ip" id="serverIP">c15.play2go.cloud:20141</div>
+        <button class="btn btn-primary" onclick="copyIP()">📋 Скопировать IP</button>
+        <p id="copyText" style="color:#ffc8a8;margin-top:16px;font-size:13px;font-weight:600"></p>
+    </div>
+</section>
+
+<section id="rules">
+    <div class="section-title reveal">
+        <h2>Правила</h2>
+        <p>Приват защищает. Всё остальное — на твой страх и риск.</p>
+    </div>
+    <div class="rules">
+        <div class="rule reveal"><span class="num">01</span><span>Запрещены читы и сторонние программы, дающие преимущество: killaura, x-ray, fly, auto-clicker и т.п.</span></div>
+        <div class="rule reveal"><span class="num">02</span><span><b style="color:#ffc8a8">Внутри привата</b> запрещены гриф, воровство, взрывы и PvP. Нарушение — бан без предупреждения.</span></div>
+        <div class="rule reveal"><span class="num">03</span><span><b style="color:#ffc8a8">Вне привата</b> гриф, рейды, ловушки, воровство и PvP — <b style="color:#ffc8a8">разрешены</b>. Не жалуйся, если тебя обчистили за границей региона.</span></div>
+        <div class="rule reveal"><span class="num">04</span><span>Запрещены DDoS-атаки, краш-эксплойты и лаг-машины, роняющие сервер.</span></div>
+        <div class="rule reveal"><span class="num">05</span><span>Запрещены реальные угрозы, доксинг и травля за пределами игры.</span></div>
+        <div class="rule reveal"><span class="num">06</span><span>Дюпы, багоюз и эксплойты, ломающие экономику, — бан без предупреждения.</span></div>
+    </div>
+</section>
+
+<section id="guide">
+    <div class="section-title reveal">
+        <h2>Гайд выживания</h2>
+        <p>Как построить базу и не потерять всё за 10 минут.</p>
+    </div>
+    <div class="guide">
+        <div class="step reveal"><b>01</b><span>Зайди на сервер и сразу запризь базу командой <b style="color:#ffc8a8">/rg claim</b> — внутри региона ты в безопасности.</span></div>
+        <div class="step reveal"><b>02</b><span>Не строй всё в одном регионе. Сделай запасную нычку вне привата — на случай, если основную базу найдут.</span></div>
+        <div class="step reveal"><b>03</b><span>Никому не свети координатами базы. Даже друзьям — сегодня они друзья, завтра стучат по твоему привату.</span></div>
+        <div class="step reveal"><b>04</b><span>Держи резервный сет брони и инструментов в отдельном сундуке. Пригодится после рейда.</span></div>
+        <div class="step reveal"><b>05</b><span>Хочешь грифить сам? Ищи базы <b style="color:#ffc8a8">вне привата</b> — там всё разрешено. Внутри региона — нельзя.</span></div>
+        <div class="step reveal"><b>06</b><span>Помни: приват — не вечный. Если владелец давно не заходил, регион может быть снят. Строй с умом.</span></div>
+    </div>
+</section>
+
+<section id="discord">
+    <div class="discord reveal">
+        <h2>Наш Discord</h2>
+        <p style="color:#d4c0cc;margin:14px 0 28px;font-size:16px">Найди союзников, обсуди правила привата, договорись о рейде. Всё серьёзное начинается здесь.</p>
+        <a href="https://discord.gg/WyUz8Efhw" target="_blank" class="btn btn-primary">💬 Присоединиться к Discord</a>
+    </div>
+</section>
+</main>
+
+<footer>
+    © 2026 CRAFTDAY • Гриф-выживание с приватом • c15.play2go.cloud:20141<br>
+    <span style="opacity:.7">Не является официальным продуктом Mojang Studios.</span>
+</footer>
+
+<script>
+const reveals=document.querySelectorAll('.reveal');
+const observer=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')});
+},{threshold:.12});
+reveals.forEach(x=>observer.observe(x));
+
+const sections=document.querySelectorAll('section[id]');
+const links=document.querySelectorAll('nav a');
+window.addEventListener('scroll',()=>{
+    let current='';
+    sections.forEach(s=>{
+        if(scrollY >= s.offsetTop-180) current=s.id;
+    });
+    links.forEach(a=>{
+        a.classList.toggle('active',a.getAttribute('href')==='#'+current);
+    });
+});
+
+function copyIP(){
+    const ip=document.getElementById('serverIP').innerText;
+    navigator.clipboard.writeText(ip);
+    const t=document.getElementById('copyText');
+    t.innerText='✓ IP скопирован!';
+    setTimeout(()=>{t.innerText=''},2500);
+}
+</script>
+</body>
+</html>
