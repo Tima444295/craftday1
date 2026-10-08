@@ -3,1454 +3,329 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>NETHER WORLD — Minecraft Server</title>
-
-<link rel="icon" type="image/png" href="netherite_scrap.png">
-
+<title>CraftDay — Гриф-выживание с приватом | c15.play2go.cloud:20141</title>
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-html{
-    scroll-behavior:smooth;
-}
-
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
 body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:
-        radial-gradient(circle at center,#353535 0,#171717 50%,#070707 100%);
+    font-family:'Segoe UI',Arial,Helvetica,sans-serif;
+    background:#141a2a;
     color:#fff;
-    image-rendering:pixelated;
+    overflow-x:hidden;
+    line-height:1.5;
 }
-
-/* ===== BANNER ===== */
-
-.top-banner{
-    position:relative;
-    width:100%;
-    height:430px;
-    overflow:hidden;
-    border-bottom:6px solid #111;
-    box-shadow:0 5px 0 #555,0 10px 30px rgba(0,0,0,.8);
-}
-
-.top-banner img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-    image-rendering:pixelated;
-}
-
-.top-banner:after{
+body:before{
     content:"";
-    position:absolute;
-    inset:0;
-    background:linear-gradient(
-        to bottom,
-        rgba(0,0,0,.05),
-        rgba(0,0,0,.25),
-        rgba(0,0,0,.9)
-    );
+    position:fixed;inset:0;z-index:-2;
+    background:
+      radial-gradient(circle at 15% 15%,rgba(255,160,120,.20),transparent 38%),
+      radial-gradient(circle at 85% 75%,rgba(255,120,180,.16),transparent 38%),
+      radial-gradient(circle at 50% 50%,rgba(150,120,255,.14),transparent 55%),
+      radial-gradient(circle at 80% 20%,rgba(120,200,255,.12),transparent 45%),
+      linear-gradient(135deg,#151c2e,#221a30 50%,#141a26);
 }
-
-.banner-title{
-    position:absolute;
-    z-index:2;
-    left:50%;
-    bottom:55px;
-    transform:translateX(-50%);
-    text-align:center;
-    width:100%;
-    text-shadow:4px 4px 0 #111,-2px -2px 0 #111;
+body:after{
+    content:"";
+    position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+    background-size:44px 44px;
+    mask-image:radial-gradient(ellipse at center,#000 35%,transparent 85%);
 }
-
-.banner-title h1{
-    font-size:64px;
-    letter-spacing:5px;
-}
-
-.banner-title p{
-    margin-top:10px;
-    font-size:18px;
-    color:#ddd;
-}
-
-/* ===== HEADER ===== */
-
 header{
-    position:sticky;
-    top:0;
-    z-index:100;
-    background:linear-gradient(#777,#555);
-    border-top:4px solid #aaa;
-    border-bottom:5px solid #111;
-    box-shadow:0 5px 0 rgba(0,0,0,.6);
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(20,26,42,.68);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(255,160,120,.22);
 }
-
-.header-inner{
-    max-width:1200px;
-    margin:auto;
-    min-height:70px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:20px;
-    padding:10px 20px;
+.nav{
+    max-width:1200px;margin:auto;padding:16px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:20px;
 }
-
 .logo{
-    font-size:25px;
-    font-weight:bold;
-    white-space:nowrap;
-    text-shadow:3px 3px #222;
+    font-size:24px;font-weight:900;letter-spacing:2px;
+    background:linear-gradient(90deg,#ffb28a,#ff7aa8,#c89cff);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 18px rgba(255,150,120,.6));
 }
-
-.logo span{
-    color:#ff3b20;
-}
-
-nav{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:8px;
-}
-
+nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 nav a{
-    color:white;
-    text-decoration:none;
-    font-weight:bold;
-    padding:13px 18px;
-    background:linear-gradient(#777,#555);
-    border-top:3px solid #aaa;
-    border-left:3px solid #aaa;
-    border-right:3px solid #222;
-    border-bottom:3px solid #222;
-    text-shadow:2px 2px #222;
-    transition:.15s;
+    color:#e0d4dc;text-decoration:none;padding:9px 14px;border-radius:9px;
+    transition:.25s;font-size:14px;font-weight:600;
 }
-
-nav a:hover{
-    background:linear-gradient(#888,#666);
-    transform:translateY(-2px);
-}
-
-/* ===== MAIN ===== */
-
-main{
-    max-width:1200px;
-    margin:auto;
-    padding:45px 20px;
-}
-
-section{
-    margin-bottom:50px;
-    scroll-margin-top:100px;
-}
-
-/* ===== PANELS ===== */
-
-.panel{
-    background:linear-gradient(
-        135deg,
-        rgba(80,80,80,.97),
-        rgba(35,35,35,.97)
-    );
-    border:4px solid #111;
-    box-shadow:
-        inset 4px 4px 0 #888,
-        inset -4px -4px 0 #222,
-        0 7px 0 rgba(0,0,0,.6);
-    padding:30px;
-}
-
-.panel-title{
-    text-align:center;
-    font-size:32px;
-    margin-bottom:25px;
-    text-shadow:3px 3px #111;
-}
-
-/* ===== HERO ===== */
-
+nav a:hover,nav a.active{background:rgba(255,150,120,.18);color:#ffc2a0}
 .hero{
-    text-align:center;
-    padding:55px 25px;
+    min-height:100vh;display:flex;align-items:center;justify-content:center;
+    text-align:center;padding:130px 20px 80px;position:relative;
 }
-
-.hero h2{
-    font-size:42px;
-    margin-bottom:15px;
-    text-shadow:4px 4px #111;
+.hero-content{max-width:980px}
+.badge{
+    display:inline-block;padding:10px 18px;border:1px solid rgba(255,160,120,.5);
+    border-radius:100px;background:rgba(255,160,120,.12);color:#ffc8a8;
+    font-size:13px;font-weight:700;margin-bottom:26px;letter-spacing:1px;
+    box-shadow:0 0 35px rgba(255,150,120,.25);
 }
-
+h1{
+    font-size:clamp(64px,12vw,150px);line-height:.9;font-weight:1000;
+    letter-spacing:6px;
+    background:linear-gradient(135deg,#ffffff 0%,#ffd0b8 35%,#ff8ab8 70%,#c89cff 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 12px 45px rgba(255,150,120,.5));
+    margin-bottom:8px;
+}
 .hero p{
-    color:#ddd;
-    font-size:18px;
-    line-height:1.7;
+    max-width:720px;margin:26px auto;color:#d4c4ce;font-size:18px;line-height:1.7;
 }
-
-.buttons{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:12px;
-    margin-top:30px;
+.buttons{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:32px}
+.btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    padding:15px 26px;border-radius:12px;text-decoration:none;font-weight:800;
+    border:1px solid rgba(255,255,255,.16);transition:.3s;cursor:pointer;
+    font-size:15px;
 }
-
-.minecraft-button{
-    display:inline-block;
-    padding:15px 25px;
-    color:white;
-    text-decoration:none;
-    font-weight:bold;
-    background:linear-gradient(#777,#555);
-    border-top:4px solid #aaa;
-    border-left:4px solid #aaa;
-    border-right:4px solid #222;
-    border-bottom:4px solid #222;
-    box-shadow:0 4px 0 #111;
-    text-shadow:2px 2px #222;
-    transition:.15s;
+.btn-primary{
+    background:linear-gradient(135deg,#ffb28a,#ff7aa8);
+    color:#2a0814;box-shadow:0 12px 40px rgba(255,150,120,.45);
 }
-
-.minecraft-button:hover{
-    background:linear-gradient(#888,#666);
-    transform:translateY(-2px);
+.btn-primary:hover{transform:translateY(-4px);box-shadow:0 18px 50px rgba(255,150,120,.65)}
+.btn-dark{background:rgba(255,255,255,.1);color:#fff;backdrop-filter:blur(12px)}
+.btn-dark:hover{transform:translateY(-4px);background:rgba(255,255,255,.18)}
+section{max-width:1200px;margin:auto;padding:110px 24px}
+.section-title{text-align:center;margin-bottom:55px}
+.section-title h2{
+    font-size:clamp(32px,4vw,46px);margin-bottom:12px;
+    background:linear-gradient(135deg,#ffffff,#ffc8a8);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
 }
-
-/* ===== IP ===== */
-
-.ip-box{
-    text-align:center;
-    margin-top:20px;
-}
-
-.ip-label{
-    font-size:18px;
-    color:#bbb;
-    margin-bottom:12px;
-}
-
-.server-ip{
-    display:inline-block;
-    padding:18px 25px;
-    background:#111;
-    border:4px solid #000;
-    box-shadow:inset 3px 3px #333,inset -3px -3px #050505;
-    color:#55ff55;
-    font-family:monospace;
-    font-size:26px;
-    font-weight:bold;
-    user-select:all;
-}
-
-.copy-button{
-    margin-left:8px;
-    padding:16px 20px;
-    border:4px solid #111;
-    background:#777;
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
-    box-shadow:inset 3px 3px #aaa,inset -3px -3px #222;
-}
-
-.copy-button:hover{
-    background:#888;
-}
-
-/* ===== CARDS ===== */
-
-.cards{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
-}
-
+.section-title p{color:#c0aeb8;font-size:16px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .card{
-    padding:25px 15px;
-    text-align:center;
-    background:#3a3a3a;
-    border:4px solid #111;
-    box-shadow:inset 3px 3px #777,inset -3px -3px #222;
-    transition:.2s;
+    position:relative;
+    background:linear-gradient(145deg,rgba(56,42,58,.78),rgba(38,28,48,.78));
+    border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:30px;
+    transition:.35s;box-shadow:0 18px 55px rgba(0,0,0,.28);
+    backdrop-filter:blur(14px);
+    overflow:hidden;
 }
-
-.card:hover{
-    transform:translateY(-5px);
+.card:before{
+    content:"";position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,transparent,#ffb28a,#ff7aa8,transparent);
+    opacity:0;transition:.35s;
 }
-
-.card-icon{
-    font-size:35px;
-    margin-bottom:12px;
+.card:hover{transform:translateY(-8px);border-color:rgba(255,160,120,.5)}
+.card:hover:before{opacity:1}
+.icon{
+    font-size:34px;margin-bottom:18px;
+    display:inline-block;width:60px;height:60px;line-height:60px;text-align:center;
+    background:linear-gradient(135deg,rgba(255,150,120,.25),rgba(255,90,160,.18));
+    border-radius:14px;
+    box-shadow:0 0 35px rgba(255,150,120,.25);
 }
-
-.card h3{
-    margin-bottom:8px;
+.card h3{font-size:20px;margin-bottom:10px;color:#fff0e6}
+.card p{color:#d0bcc6;line-height:1.6;font-size:14.5px}
+.server-box{
+    max-width:820px;margin:auto;padding:40px;border-radius:22px;
+    background:linear-gradient(145deg,rgba(56,42,58,.85),rgba(38,28,48,.85));
+    border:1px solid rgba(255,160,120,.3);text-align:center;
+    box-shadow:0 25px 70px rgba(0,0,0,.35),0 0 70px rgba(255,150,120,.15);
+    backdrop-filter:blur(14px);
 }
-
-.card p{
-    color:#bbb;
+.status{display:flex;justify-content:center;gap:10px;align-items:center;color:#e0ccd4;font-size:14px;font-weight:600}
+.dot{
+    width:10px;height:10px;background:#ffb28a;border-radius:50%;
+    box-shadow:0 0 18px #ffb28a;animation:pulse 1.6s infinite;
 }
-
-/* ===== INFO ===== */
-
-.info-list{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:15px;
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.85)}}
+.ip{
+    margin:22px 0;padding:22px;border-radius:14px;
+    background:rgba(52,18,32,.55);
+    border:1px dashed rgba(255,160,120,.55);
+    font-size:22px;font-weight:900;letter-spacing:1px;color:#ffc8a8;
+    font-family:'Courier New',monospace;
+    text-shadow:0 0 22px rgba(255,150,120,.5);
+    word-break:break-all;
 }
-
-.info{
-    background:#292929;
-    padding:20px;
-    border:4px solid #111;
-    box-shadow:inset 3px 3px #555,inset -3px -3px #151515;
-}
-
-.info strong{
-    color:#fff;
-}
-
-.info span{
-    color:#55ff55;
-}
-
-/* ===== RULES ===== */
-
-.rules{
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-}
-
+.rules{display:grid;gap:12px;max-width:900px;margin:auto}
 .rule{
-    background:#292929;
-    border:4px solid #111;
-    box-shadow:inset 3px 3px #555,inset -3px -3px #151515;
-    padding:22px;
-    transition:.2s;
+    display:flex;gap:18px;padding:20px 22px;
+    background:linear-gradient(145deg,rgba(56,42,58,.65),rgba(38,28,48,.65));
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:14px;color:#d0bcc6;line-height:1.6;
+    transition:.3s;backdrop-filter:blur(10px);
 }
-
-.rule:hover{
-    transform:translateX(5px);
-    background:#303030;
+.rule:hover{border-color:rgba(255,160,120,.4);transform:translateX(6px)}
+.num{
+    font-weight:900;font-size:18px;min-width:34px;
+    background:linear-gradient(135deg,#ffb28a,#ff7aa8);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
 }
-
-.rule-head{
-    display:flex;
-    align-items:center;
-    gap:15px;
-    margin-bottom:12px;
+.guide{max-width:900px;margin:auto}
+.step{
+    display:flex;gap:22px;margin-bottom:16px;padding:24px;
+    background:linear-gradient(145deg,rgba(56,42,58,.65),rgba(38,28,48,.65));
+    border-radius:16px;border:1px solid rgba(255,255,255,.1);
+    transition:.3s;backdrop-filter:blur(10px);
 }
-
-.rule-number{
-    width:45px;
-    height:45px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#555;
-    border:3px solid #111;
-    font-weight:bold;
-    font-size:20px;
-    flex-shrink:0;
+.step:hover{border-color:rgba(255,160,120,.4);transform:translateX(6px)}
+.step b{
+    min-width:38px;font-size:22px;font-weight:900;
+    background:linear-gradient(135deg,#ffb28a,#ff7aa8);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
 }
-
-.rule h3{
-    font-size:21px;
+.step span{color:#d0bcc6;line-height:1.6}
+.discord{
+    text-align:center;padding:65px 30px;border-radius:24px;
+    background:linear-gradient(135deg,rgba(120,120,255,.22),rgba(255,150,120,.16));
+    border:1px solid rgba(200,160,255,.35);
+    box-shadow:0 25px 70px rgba(0,0,0,.3);
+    backdrop-filter:blur(14px);
 }
-
-.rule p{
-    color:#ccc;
-    line-height:1.6;
-    margin-bottom:14px;
+.discord h2{
+    font-size:32px;margin-bottom:14px;
+    background:linear-gradient(135deg,#fff,#ffc8a8);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
 }
-
-.punishment{
-    display:inline-block;
-    padding:9px 13px;
-    background:#160c08;
-    border:3px solid #3b160e;
-    color:#ff9b8c;
-    font-weight:bold;
-}
-
-.punishment span{
-    color:#fff;
-}
-
-/* ===== WARNING ===== */
-
-.warning{
-    margin-top:25px;
-    padding:20px;
-    background:#3b270b;
-    border:4px solid #171005;
-    box-shadow:inset 3px 3px #76551c,inset -3px -3px #201504;
-    color:#ffd76a;
-    line-height:1.6;
-}
-
-.warning strong{
-    color:#fff;
-}
-
-/* ===== CONTACTS ===== */
-
-.contacts{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:15px;
-}
-
-.contact{
-    text-decoration:none;
-    color:white;
-    background:#333;
-    border:4px solid #111;
-    padding:25px;
-    text-align:center;
-    box-shadow:inset 3px 3px #777,inset -3px -3px #222;
-    transition:.2s;
-}
-
-.contact:hover{
-    transform:translateY(-4px);
-    background:#444;
-}
-
-.contact-icon{
-    font-size:35px;
-    margin-bottom:10px;
-}
-
-.contact h3{
-    margin-bottom:8px;
-}
-
-.contact p{
-    color:#aaa;
-    word-break:break-word;
-}
-
-/* ===== FOOTER ===== */
-
 footer{
-    text-align:center;
-    padding:35px 20px;
-    background:#111;
-    border-top:5px solid #000;
-    color:#777;
-    line-height:1.8;
+    border-top:1px solid rgba(255,255,255,.1);padding:34px 20px;
+    text-align:center;color:#9c8a96;font-size:13px;
 }
-
-footer strong{
-    color:#ddd;
+.reveal{opacity:0;transform:translateY(30px);transition:.8s cubic-bezier(.2,.8,.2,1)}
+.reveal.show{opacity:1;transform:none}
+@media(max-width:800px){
+    .grid{grid-template-columns:1fr}
+    nav{display:none}
+    .nav{justify-content:center}
+    section{padding:80px 18px}
+    .hero{padding-top:120px}
+    .server-box{padding:26px 18px}
+    .ip{font-size:16px}
 }
-
-/* ===== ANIMATION ===== */
-
-.reveal{
-    opacity:0;
-    transform:translateY(25px);
-    transition:.7s ease;
-}
-
-.reveal.show{
-    opacity:1;
-    transform:translateY(0);
-}
-
-/* ===== PIXELS ===== */
-
-.pixel{
-    position:fixed;
-    width:4px;
-    height:4px;
-    background:#777;
-    pointer-events:none;
-    opacity:.25;
-    z-index:-1;
-    animation:fall linear infinite;
-}
-
-@keyframes fall{
-    from{
-        transform:translateY(-20px);
-    }
-    to{
-        transform:translateY(110vh);
-    }
-}
-
-/* ===== MOBILE ===== */
-
-@media(max-width:900px){
-
-    .cards{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .contacts{
-        grid-template-columns:1fr;
-    }
-
-    .header-inner{
-        flex-direction:column;
-    }
-}
-
-@media(max-width:600px){
-
-    .top-banner{
-        height:280px;
-    }
-
-    .banner-title{
-        bottom:30px;
-    }
-
-    .banner-title h1{
-        font-size:38px;
-    }
-
-    .banner-title p{
-        font-size:13px;
-    }
-
-    nav{
-        width:100%;
-    }
-
-    nav a{
-        padding:10px 12px;
-        font-size:13px;
-    }
-
-    main{
-        padding:25px 10px;
-    }
-
-    .panel{
-        padding:20px 12px;
-    }
-
-    .hero h2{
-        font-size:30px;
-    }
-
-    .cards{
-        grid-template-columns:1fr;
-    }
-
-    .info-list{
-        grid-template-columns:1fr;
-    }
-
-    .server-ip{
-        display:block;
-        font-size:18px;
-        margin-bottom:10px;
-        overflow-wrap:anywhere;
-    }
-
-    .copy-button{
-        margin-left:0;
-        width:100%;
-    }
-}
-
 </style>
 </head>
-
 <body>
 
-<!-- ==================================================
-     БАННЕР
-================================================== -->
-
-<div class="top-banner">
-
-    <img src="banner.jpg" alt="NETHER WORLD">
-
-    <div class="banner-title">
-
-        <h1>NETHER WORLD</h1>
-
-        <p>
-            КЛАССИЧЕСКИЙ MINECRAFT СЕРВЕР
-        </p>
-
-    </div>
-
-</div>
-
-
-<!-- ==================================================
-     МЕНЮ
-================================================== -->
-
 <header>
-
-<div class="header-inner">
-
-    <div class="logo">
-        ⛏ NETHER <span>WORLD</span>
-    </div>
-
+<div class="nav">
+    <div class="logo">CRAFTDAY</div>
     <nav>
-
-        <a href="#home">
-            Главная
-        </a>
-
-        <a href="#server">
-            Сервер
-        </a>
-
-        <a href="#rules">
-            Правила
-        </a>
-
-        <a href="#contacts">
-            Контакты
-        </a>
-
+        <a href="#home" class="active">Главная</a>
+        <a href="#about">О сервере</a>
+        <a href="#online">IP</a>
+        <a href="#rules">Правила</a>
+        <a href="#guide">Гайд</a>
+        <a href="#discord">Discord</a>
     </nav>
-
 </div>
-
 </header>
 
-
 <main>
-
-
-<!-- ==================================================
-     ГЛАВНАЯ
-================================================== -->
-
-<section id="home" class="reveal">
-
-<div class="panel hero">
-
-    <h2>
-        Добро пожаловать!
-    </h2>
-
-    <p>
-
-        Добро пожаловать на
-        <strong>NETHER WORLD</strong> —
-        Minecraft сервер для тех,
-        кто любит выживание,
-        PvP, экономику,
-        боссов и настоящую атмосферу Minecraft.
-
-    </p>
-
-    <div class="buttons">
-
-        <a href="#server" class="minecraft-button">
-            ▶ ИГРАТЬ
-        </a>
-
-        <a
-            id="discordButton"
-            href="#"
-            target="_blank"
-            class="minecraft-button">
-
-            💬 DISCORD
-
-        </a>
-
-        <a
-            id="shopButton"
-            href="#"
-            target="_blank"
-            class="minecraft-button">
-
-            🛒 МАГАЗИН
-
-        </a>
-
+<section class="hero" id="home">
+    <div class="hero-content reveal">
+        <div class="badge">🛡 ГРИФ-ВЫЖИВАНИЕ • ПРИВАТ • PVP ЗОНЫ</div>
+        <h1>CRAFTDAY</h1>
+        <p>Гриф-выживание с приватом и балансом. Строй базу под защитой региона, выходи за его пределы — и вступай в настоящую борьбу. Твоя территория защищена, но за её границей правит хаос.</p>
+        <div class="buttons">
+            <a href="#online" class="btn btn-primary">⚔ Начать выживать</a>
+            <a href="https://discord.gg/WyUz8Efhw" target="_blank" class="btn btn-dark">💬 Discord</a>
+        </div>
     </div>
-
-</div>
-
 </section>
 
-
-<!-- ==================================================
-     СЕРВЕР
-================================================== -->
-
-<section id="server" class="reveal">
-
-<div class="panel">
-
-    <h2 class="panel-title">
-        ⛏ ИНФОРМАЦИЯ О СЕРВЕРЕ
-    </h2>
-
-    <div class="ip-box">
-
-        <div class="ip-label">
-            ПОЛНЫЙ IP-АДРЕС СЕРВЕРА
-        </div>
-
-        <span
-            id="serverIP"
-            class="server-ip">
-        </span>
-
-        <button
-            class="copy-button"
-            onclick="copyIP()">
-
-            📋 КОПИРОВАТЬ
-
-        </button>
-
+<section id="about">
+    <div class="section-title reveal">
+        <h2>О сервере</h2>
+        <p>CraftDay — гриф-выживание с приватом и разумными правилами.</p>
     </div>
-
-    <br><br>
-
-    <div class="cards">
-
-        <div class="card">
-
-            <div class="card-icon">
-                ⛏
-            </div>
-
-            <h3>
-                Версия
-            </h3>
-
-            <p>
-                Minecraft 1.16.5
-            </p>
-
-        </div>
-
-        <div class="card">
-
-            <div class="card-icon">
-                ⚔
-            </div>
-
-            <h3>
-                PvP
-            </h3>
-
-            <p>
-                Активное PvP
-            </p>
-
-        </div>
-
-        <div class="card">
-
-            <div class="card-icon">
-                👹
-            </div>
-
-            <h3>
-                Боссы
-            </h3>
-
-            <p>
-                Уникальные боссы
-            </p>
-
-        </div>
-
-        <div class="card">
-
-            <div class="card-icon">
-                💰
-            </div>
-
-            <h3>
-                Экономика
-            </h3>
-
-            <p>
-                Игровая экономика
-            </p>
-
-        </div>
-
+    <div class="grid">
+        <div class="card reveal"><div class="icon">🛡</div><h3>Приват-регионы</h3><p>Запри свою базу командой <b style="color:#ffc8a8">/rg claim</b> — и она под защитой. Никто не сможет ломать, взрывать или воровать внутри региона.</p></div>
+        <div class="card reveal"><div class="icon">💥</div><h3>Гриф вне привата</h3><p>За пределами защищённых зон действует анархия: гриф, рейды, ловушки и PvP разрешены. Строишь вне привата — рискуешь.</p></div>
+        <div class="card reveal"><div class="icon">🗡</div><h3>PvP и рейды</h3><p>Собирай банду, находи чужие незащищённые базы, устраивай засады. Регион — не спасение, если ты забыл его расширить.</p></div>
     </div>
-
-</div>
-
 </section>
 
-
-<!-- ==================================================
-     ДАННЫЕ
-================================================== -->
-
-<section class="reveal">
-
-<div class="panel">
-
-    <h2 class="panel-title">
-        📊 ДАННЫЕ СЕРВЕРА
-    </h2>
-
-    <div class="info-list">
-
-        <div class="info">
-            🌐 <strong>IP:</strong>
-            <span id="serverIPInfo"></span>
-        </div>
-
-        <div class="info">
-            🎮 <strong>Версия:</strong>
-            <span>1.16.5</span>
-        </div>
-
-        <div class="info">
-            ⚔ <strong>PvP:</strong>
-            <span>Включено</span>
-        </div>
-
-        <div class="info">
-            👹 <strong>Боссы:</strong>
-            <span>Есть</span>
-        </div>
-
-        <div class="info">
-            💰 <strong>Экономика:</strong>
-            <span>Есть</span>
-        </div>
-
-        <div class="info">
-            🛒 <strong>Магазин:</strong>
-            <span>TradeMC</span>
-        </div>
-
+<section id="online">
+    <div class="section-title reveal">
+        <h2>Зайти на сервер</h2>
+        <p>Скопируй IP и начинай выживать.</p>
     </div>
-
-</div>
-
+    <div class="server-box reveal">
+        <div class="status"><span class="dot"></span> CRAFTDAY • гриф-выживание с приватом • онлайн</div>
+        <div class="ip" id="serverIP">c15.play2go.cloud:20141</div>
+        <button class="btn btn-primary" onclick="copyIP()">📋 Скопировать IP</button>
+        <p id="copyText" style="color:#ffc8a8;margin-top:16px;font-size:13px;font-weight:600"></p>
+    </div>
 </section>
 
-
-<!-- ==================================================
-     ПРАВИЛА
-================================================== -->
-
-<section id="rules" class="reveal">
-
-<div class="panel">
-
-<h2 class="panel-title">
-    📜 ПРАВИЛА СЕРВЕРА
-</h2>
-
-<div class="rules">
-
-
-<div class="rule">
-
-<div class="rule-head">
-
-<div class="rule-number">1</div>
-
-<h3>
-    🤝 Уважение к игрокам
-</h3>
-
-</div>
-
-<p>
-Запрещены оскорбления, унижения,
-травля, угрозы и намеренное
-провоцирование конфликтов.
-Относитесь уважительно к игрокам
-и администрации.
-</p>
-
-<div class="punishment">
-Наказание:
-<span>
-Мут 30 минут → 2 часа → 1 день
-</span>
-</div>
-
-</div>
-
-
-<div class="rule">
-
-<div class="rule-head">
-
-<div class="rule-number">2</div>
-
-<h3>
-    🚫 Читы
-</h3>
-
-</div>
-
-<p>
-Использование читов, KillAura,
-X-Ray, Fly, SpeedHack и другого
-стороннего ПО, которое даёт
-преимущество над игроками,
-строго запрещено.
-</p>
-
-<div class="punishment">
-Наказание:
-<span>
-Бан 7 дней → 30 дней → навсегда
-</span>
-</div>
-
-</div>
-
-
-<div class="rule">
-
-<div class="rule-head">
-
-<div class="rule-number">3</div>
-
-<h3>
-    🐛 Багоюз
-</h3>
-
-</div>
-
-<p>
-Запрещено намеренно использовать
-ошибки и баги сервера для получения
-предметов, денег или другого
-игрового преимущества.
-</p>
-
-<div class="punishment">
-Наказание:
-<span>
-Бан 1–7 дней
-</span>
-</div>
-
-</div>
-
-
-<div class="rule">
-
-<div class="rule-head">
-
-<div class="rule-number">4</div>
-
-<h3>
-    💬 Флуд и спам
-</h3>
-
-</div>
-
-<p>
-Запрещено отправлять одинаковые
-сообщения несколько раз подряд,
-засорять чат или мешать другим
-игрокам общаться.
-</p>
-
-<div class="punishment">
-Наказание:
-<span>
-Мут 15 минут → 1 час → 3 часа
-</span>
-</div>
-
-</div>
-
-
-<div class="rule">
-
-<div class="rule-head">
-
-<div class="rule-number">5</div>
-
-<h3>
-    📢 Реклама
-</h3>
-
-</div>
-
-<p>
-Запрещена реклама других серверов,
-проектов, сайтов и сторонних
-игровых ресурсов без разрешения
-администрации.
-</p>
-
-<div class="punishment">
-Наказание:
-<span>
-Бан 7 дней → навсегда
-</span>
-</div>
-
-</div>
-
-
-<div class="rule">
-
-<div class="rule-head">
-
-<div class="rule-number">6</div>
-
-<h3>
-    💰 Обман игроков
-</h3>
-
-</div>
-
-<p>
-Запрещён намеренный обман игроков,
-мошенничество, выманивание игровой
-валюты или предметов с помощью
-ложной информации.
-</p>
-
-<div class="punishment">
-Наказание:
-<span>
-Бан 1–3 дня
-</span>
-</div>
-
-</div>
-
-
-<div class="rule">
-
-<div class="rule-head">
-
-<div class="rule-number">7</div>
-
-<h3>
-    😡 Провокации
-</h3>
-
-</div>
-
-<p>
-Запрещено специально провоцировать
-игроков на конфликты, создавать
-токсичную атмосферу и мешать
-нормальному общению.
-</p>
-
-<div class="punishment">
-Наказание:
-<span>
-Мут 30 минут → 3 часа
-</span>
-</div>
-
-</div>
-
-
-<div class="rule">
-
-<div class="rule-head">
-
-<div class="rule-number">8</div>
-
-<h3>
-    ⚠ Помеха игровому процессу
-</h3>
-
-</div>
-
-<p>
-Запрещено намеренно мешать игрокам:
-блокировать проходы, мешать
-строительству и другим игровым
-действиям.
-</p>
-
-<div class="punishment">
-Наказание:
-<span>
-Кик → мут 1 час → бан 1 день
-</span>
-</div>
-
-</div>
-
-
-<div class="rule">
-
-<div class="rule-head">
-
-<div class="rule-number">9</div>
-
-<h3>
-    🧩 Запрещённые моды
-</h3>
-
-</div>
-
-<p>
-Запрещены модификации, которые дают
-игроку нечестное преимущество:
-X-Ray, автокликеры, KillAura,
-Fly и аналогичные моды.
-</p>
-
-<div class="punishment">
-Наказание:
-<span>
-Бан 3–30 дней
-</span>
-</div>
-
-</div>
-
-
-<div class="rule">
-
-<div class="rule-head">
-
-<div class="rule-number">10</div>
-
-<h3>
-    💥 Вред серверу
-</h3>
-
-</div>
-
-<p>
-Запрещены намеренные действия,
-направленные на причинение вреда
-серверу, игрокам или игровой
-инфраструктуре.
-</p>
-
-<div class="punishment">
-Наказание:
-<span>
-Бан 30 дней → навсегда
-</span>
-</div>
-
-</div>
-
-
-</div>
-
-
-<div class="warning">
-
-⚠ <strong>ВАЖНО:</strong>
-
-Администрация оставляет за собой
-право изменить срок наказания
-в зависимости от тяжести нарушения,
-повторного нарушения и обстоятельств.
-
-<br><br>
-
-За особо серьёзные нарушения
-может быть выдан перманентный бан.
-
-</div>
-
-</div>
-
+<section id="rules">
+    <div class="section-title reveal">
+        <h2>Правила</h2>
+        <p>Приват защищает. Всё остальное — на твой страх и риск.</p>
+    </div>
+    <div class="rules">
+        <div class="rule reveal"><span class="num">01</span><span>Запрещены читы и сторонние программы, дающие преимущество: killaura, x-ray, fly, auto-clicker и т.п.</span></div>
+        <div class="rule reveal"><span class="num">02</span><span><b style="color:#ffc8a8">Внутри привата</b> запрещены гриф, воровство, взрывы и PvP. Нарушение — бан без предупреждения.</span></div>
+        <div class="rule reveal"><span class="num">03</span><span><b style="color:#ffc8a8">Вне привата</b> гриф, рейды, ловушки, воровство и PvP — <b style="color:#ffc8a8">разрешены</b>. Не жалуйся, если тебя обчистили за границей региона.</span></div>
+        <div class="rule reveal"><span class="num">04</span><span>Запрещены DDoS-атаки, краш-эксплойты и лаг-машины, роняющие сервер.</span></div>
+        <div class="rule reveal"><span class="num">05</span><span>Запрещены реальные угрозы, доксинг и травля за пределами игры.</span></div>
+        <div class="rule reveal"><span class="num">06</span><span>Дюпы, багоюз и эксплойты, ломающие экономику, — бан без предупреждения.</span></div>
+    </div>
 </section>
 
-
-<!-- ==================================================
-     КОНТАКТЫ
-================================================== -->
-
-<section id="contacts" class="reveal">
-
-<div class="panel">
-
-<h2 class="panel-title">
-    📞 КОНТАКТЫ
-</h2>
-
-<div class="contacts">
-
-
-<a
-    id="discordContact"
-    class="contact"
-    href="#"
-    target="_blank">
-
-    <div class="contact-icon">
-        💬
+<section id="guide">
+    <div class="section-title reveal">
+        <h2>Гайд выживания</h2>
+        <p>Как построить базу и не потерять всё за 10 минут.</p>
     </div>
-
-    <h3>
-        Discord
-    </h3>
-
-    <p id="discordText">
-    </p>
-
-</a>
-
-
-<a
-    id="shopContact"
-    class="contact"
-    href="#"
-    target="_blank">
-
-    <div class="contact-icon">
-        🛒
+    <div class="guide">
+        <div class="step reveal"><b>01</b><span>Зайди на сервер и сразу запризь базу командой <b style="color:#ffc8a8">/rg claim</b> — внутри региона ты в безопасности.</span></div>
+        <div class="step reveal"><b>02</b><span>Не строй всё в одном регионе. Сделай запасную нычку вне привата — на случай, если основную базу найдут.</span></div>
+        <div class="step reveal"><b>03</b><span>Никому не свети координатами базы. Даже друзьям — сегодня они друзья, завтра стучат по твоему привату.</span></div>
+        <div class="step reveal"><b>04</b><span>Держи резервный сет брони и инструментов в отдельном сундуке. Пригодится после рейда.</span></div>
+        <div class="step reveal"><b>05</b><span>Хочешь грифить сам? Ищи базы <b style="color:#ffc8a8">вне привата</b> — там всё разрешено. Внутри региона — нельзя.</span></div>
+        <div class="step reveal"><b>06</b><span>Помни: приват — не вечный. Если владелец давно не заходил, регион может быть снят. Строй с умом.</span></div>
     </div>
-
-    <h3>
-        Магазин
-    </h3>
-
-    <p>
-        TradeMC
-    </p>
-
-</a>
-
-
-<div class="contact">
-
-    <div class="contact-icon">
-        🌐
-    </div>
-
-    <h3>
-        IP сервера
-    </h3>
-
-    <p id="serverIPContact">
-    </p>
-
-</div>
-
-
-</div>
-
-</div>
-
 </section>
 
+<section id="discord">
+    <div class="discord reveal">
+        <h2>Наш Discord</h2>
+        <p style="color:#d4c0cc;margin:14px 0 28px;font-size:16px">Найди союзников, обсуди правила привата, договорись о рейде. Всё серьёзное начинается здесь.</p>
+        <a href="https://discord.gg/WyUz8Efhw" target="_blank" class="btn btn-primary">💬 Присоединиться к Discord</a>
+    </div>
+</section>
 </main>
 
-
-<!-- ==================================================
-     FOOTER
-================================================== -->
-
 <footer>
-
-<strong>
-NETHER WORLD
-</strong>
-
-<br>
-
-Minecraft Server
-
-<br>
-
-IP:
-<strong id="serverIPFooter">
-</strong>
-
-<br><br>
-
-© 2026 NETHER WORLD.
-Все права защищены.
-
+    © 2026 CRAFTDAY • Гриф-выживание с приватом • c15.play2go.cloud:20141<br>
+    <span style="opacity:.7">Не является официальным продуктом Mojang Studios.</span>
 </footer>
 
-
 <script>
+const reveals=document.querySelectorAll('.reveal');
+const observer=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')});
+},{threshold:.12});
+reveals.forEach(x=>observer.observe(x));
 
-/*
-======================================================
-🔥 НАСТРОЙКИ САЙТА 🔥
-
-МЕНЯТЬ ССЫЛКИ ТЕПЕРЬ НУЖНО ТОЛЬКО ЗДЕСЬ!
-======================================================
-*/
-
-const SERVER_IP =
-    "NetherWorld1.aternos.me:59752";
-
-const DISCORD_LINK =
-    "https://discord.gg/jtm3hsvvp";
-
-const SHOP_LINK =
-    "https://shopprefix.trademc.org/";
-
-
-/*
-======================================================
-НЕ ТРОГАЙ НИЖЕ, ЕСЛИ НЕ ЗНАЕШЬ JAVASCRIPT
-======================================================
-*/
-
-
-/* ===== IP ===== */
-
-document.getElementById("serverIP").textContent =
-    SERVER_IP;
-
-document.getElementById("serverIPInfo").textContent =
-    SERVER_IP;
-
-document.getElementById("serverIPContact").textContent =
-    SERVER_IP;
-
-document.getElementById("serverIPFooter").textContent =
-    SERVER_IP;
-
-
-/* ===== DISCORD ===== */
-
-document.getElementById("discordButton").href =
-    DISCORD_LINK;
-
-document.getElementById("discordContact").href =
-    DISCORD_LINK;
-
-document.getElementById("discordText").textContent =
-    DISCORD_LINK
-        .replace("https://","");
-
-
-/* ===== SHOP ===== */
-
-document.getElementById("shopButton").href =
-    SHOP_LINK;
-
-document.getElementById("shopContact").href =
-    SHOP_LINK;
-
-
-/* ===== COPY IP ===== */
+const sections=document.querySelectorAll('section[id]');
+const links=document.querySelectorAll('nav a');
+window.addEventListener('scroll',()=>{
+    let current='';
+    sections.forEach(s=>{
+        if(scrollY >= s.offsetTop-180) current=s.id;
+    });
+    links.forEach(a=>{
+        a.classList.toggle('active',a.getAttribute('href')==='#'+current);
+    });
+});
 
 function copyIP(){
-
-    navigator.clipboard
-        .writeText(SERVER_IP)
-
-        .then(function(){
-
-            const button =
-                document.querySelector(".copy-button");
-
-            const oldText =
-                button.innerHTML;
-
-            button.innerHTML =
-                "✓ СКОПИРОВАНО!";
-
-            setTimeout(function(){
-
-                button.innerHTML =
-                    oldText;
-
-            },2000);
-
-        })
-
-        .catch(function(){
-
-            alert(
-                "IP сервера: " +
-                SERVER_IP
-            );
-
-        });
-
+    const ip=document.getElementById('serverIP').innerText;
+    navigator.clipboard.writeText(ip);
+    const t=document.getElementById('copyText');
+    t.innerText='✓ IP скопирован!';
+    setTimeout(()=>{t.innerText=''},2500);
 }
-
-
-/* ===== ANIMATION ===== */
-
-const observer =
-    new IntersectionObserver(
-
-        entries => {
-
-            entries.forEach(entry => {
-
-                if(entry.isIntersecting){
-
-                    entry.target
-                        .classList
-                        .add("show");
-
-                }
-
-            });
-
-        },
-
-        {
-            threshold:.12
-        }
-
-    );
-
-
-document
-    .querySelectorAll(".reveal")
-    .forEach(
-        element =>
-        observer.observe(element)
-    );
-
-
-/* ===== PIXEL PARTICLES ===== */
-
-for(let i = 0; i < 35; i++){
-
-    const pixel =
-        document.createElement("div");
-
-    pixel.className =
-        "pixel";
-
-    pixel.style.left =
-        Math.random() * 100 + "%";
-
-    pixel.style.animationDuration =
-        (5 + Math.random() * 10) + "s";
-
-    pixel.style.animationDelay =
-        (-Math.random() * 10) + "s";
-
-    document.body.appendChild(pixel);
-
-}
-
 </script>
-
 </body>
 </html>
